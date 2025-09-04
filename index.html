@@ -1,38 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Camera Snap</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Image to PDF & CamSnap</title>
+  <link rel="stylesheet" href="stylep.css">
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>📷 Modern Camera Snap</h1>
-    </header>
-
-    <main>
-        <div class="camera-section">
-            <video id="video" autoplay></video>
-            <div id="countdown">Ready</div>
-            <div class="controls">
-                <label for="interval">Time Gap (s):</label>
-                <input type="number" id="interval" value="2" min="1">
-                <button id="startBtn">Start</button>
-                <button id="stopBtn">Stop</button>
-                <button id="clearBtn">Clear History</button>
-                <button id="downloadAllBtn">Download All</button>
-            </div>
+  <!-- Login Page -->
+  <div id="loginPage" class="page">
+    <div class="login-container">
+      <div class="login-graphic">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Graphic">
+      </div>
+      <div class="login-form">
+        <h2>Welcome Back</h2>
+        <p id="loginMsg">Please login to continue</p>
+        <div class="input-group">
+          <input type="text" id="loginUser" placeholder=" " required>
+          <label for="loginUser">Username</label>
         </div>
-
-        <div class="snapshots-section">
-            <h2>Captured Images</h2>
-            <div id="snapshots" class="snapshots"></div>
+        <div class="input-group">
+          <input type="password" id="loginPassword" placeholder=" " required>
+          <label for="loginPassword">Password</label>
         </div>
-    </main>
+        <button id="loginBtn">Login</button>
+        <p>New here? <span id="showSignup">Create account</span></p>
+      </div>
+    </div>
+  </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="script.js"></script>
+  <!-- Signup Page -->
+  <div id="signupPage" class="page" style="display:none;">
+    <h2>Create Account</h2>
+    <div class="input-group">
+      <input type="text" id="signupEmail" placeholder=" " required>
+      <label for="signupEmail">Email</label>
+    </div>
+    <div class="input-group">
+      <input type="text" id="signupUser" placeholder=" " required>
+      <label for="signupUser">Username</label>
+    </div>
+    <div class="input-group">
+      <input type="password" id="signupPassword" placeholder=" " required>
+      <label for="signupPassword">Password</label>
+    </div>
+    <button id="signupBtn">Sign Up</button>
+    <p>Already have an account? <span id="showLogin">Login</span></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="page" style="display:none;">
+    <h2>Dashboard</h2>
+    <div class="icon-grid">
+      <div class="icon-card" id="openPhotoPdf">
+        <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="Photo to PDF">
+        <p>Images to PDF</p>
+      </div>
+      <div class="icon-card" id="openCamSnap">
+        <img src="https://cdn-icons-png.flaticon.com/512/2920/2920239.png" alt="CamSnap">
+        <p>CamSnap</p>
+      </div>
+    </div>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Photo to PDF Page -->
+  <div id="photoPdfPage" class="page" style="display:none;">
+    <h2>Convert Images to PDF</h2>
+    <input type="file" id="uploadImages" multiple accept="image/*">
+    <div class="image-preview-section">
+      <h3>Arrange Images (Drag to Reorder)</h3>
+      <div id="imagePreview" class="draggable-list"></div>
+    </div>
+    <button id="downloadPdfBtn">Download PDF</button>
+    <button onclick="goDashboard()">Back</button>
+  </div>
+
+  <!-- CamSnap Page -->
+  <div id="camSnapPage" class="page" style="display:none;">
+    <h2>CamSnap</h2>
+    <video id="camera" autoplay></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <div class="controls">
+      <input type="number" id="intervalInput" placeholder="Sec" min="1" value="2">
+      <button id="startSnap">Start</button>
+      <button id="stopSnap">Stop</button>
+    </div>
+    <div id="countdown"></div>
+    <div class="snapshots-section">
+      <h3>Snapshots (Click to Preview, Drag to Reorder)</h3>
+      <div id="snapshots" class="draggable-list"></div>
+    </div>
+    <button id="downloadCamPdfBtn">Download Snaps as PDF</button>
+    <button onclick="goDashboard()">Back</button>
+  </div>
+
+  <!-- Image Preview Modal -->
+  <div id="previewModal" class="modal" style="display:none;">
+    <span id="closeModal">&times;</span>
+    <img id="previewImg" src="" alt="Preview">
+  </div>
+
+  <script src="scriptp.js"></script>
 </body>
 </html>
