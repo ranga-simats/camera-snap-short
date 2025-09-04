@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Camera Snap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>📷 Modern Camera Snap</h1>
+    </header>
+
+    <main>
+        <div class="camera-section">
+            <video id="video" autoplay></video>
+            <div id="countdown">Ready</div>
+            <div class="controls">
+                <label for="interval">Time Gap (s):</label>
+                <input type="number" id="interval" value="2" min="1">
+                <button id="startBtn">Start</button>
+                <button id="stopBtn">Stop</button>
+                <button id="clearBtn">Clear History</button>
+                <button id="downloadAllBtn">Download All</button>
+            </div>
+        </div>
+
+        <div class="snapshots-section">
+            <h2>Captured Images</h2>
+            <div id="snapshots" class="snapshots"></div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
